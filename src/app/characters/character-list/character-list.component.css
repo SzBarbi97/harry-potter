@@ -1,0 +1,59 @@
+.character-img {
+  width: 163px;
+  height: 227px;
+  min-width: 163px;
+  min-height: 227px;
+  border-radius: 5px;
+  margin: auto;
+  margin-top: 5px;
+}
+
+.character-card {
+  width: 200px;
+  height: 320px;
+  color: goldenrod;
+  background: #653112;
+  text-align: center;
+}
+
+.character-card:hover {
+  box-shadow: 0 0 2px 2px goldenrod;
+  transform: scale(1.03);
+  cursor: pointer;
+}
+
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.spinner-border {
+  width: 100px;
+  height: 100px;
+}
+
+@media screen and (max-width: 575.98px){
+
+  .filter-button {
+    justify-content: center !important;
+  }
+
+  button {
+    width: 90%;
+  }
+
+  .character-card {
+    width: 250px;
+    height: 350px;
+  }
+
+  .character-img {
+    width: 220px;
+    height: 290px;
+  }
+}
+

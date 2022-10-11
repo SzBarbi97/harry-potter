@@ -1,0 +1,25 @@
+.footer {
+  margin-top: 100px;
+  padding-bottom: 50px;
+  color: goldenrod;
+  font-size: 12px;
+}
+
+.footer-content-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid gray;
+}
+
+@media screen and (max-width: 575.98px) {
+  .footer {
+    padding-bottom: 100px;
+  }
+}
+
+@media screen and (max-width: 991.98px) {
+  .footer {
+    padding-bottom: 75px;
+  }
+}

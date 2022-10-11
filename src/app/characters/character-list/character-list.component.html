@@ -1,0 +1,26 @@
+<div class="container mt-3">
+  <div class="row filter-button justify-content-end mb-3">
+    <button (click)="openDialog()">Filter</button>
+  </div>
+
+  <div *ngIf="originalCharacterList.length === 0">
+    <div class="d-flex center">
+      <div class="spinner-border text-light"></div>
+    </div>
+  </div>
+
+  <div *ngIf="filteredCharacterList.length != 0">
+    <div class="row justify-content-center">
+      <div *ngFor="let character of filteredCharacterList">
+        <div class="character-card card m-2" (click)="openCharacterDetail(character)">
+          <img [imageSrc]="character.image" class="character-img" [alt]="character.name">
+          <p>{{character.name}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="originalCharacterList.length != 0 && filteredCharacterList.length === 0">
+    <p class="text-center mat-error">There are no characters matching the filter criteria!</p>
+  </div>
+</div>

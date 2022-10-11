@@ -1,0 +1,26 @@
+<div class="container mt-2">
+
+  <div *ngIf="spellList.length === 0">
+    <div class="d-flex center">
+      <div class="spinner-border text-light"></div>
+    </div>
+  </div>
+
+  <mat-accordion>
+    <div class="row justify-content-center" *ngIf="spellList.length != 0">
+      <div class="spell-panel mb-2" *ngFor="let spell of spellList">
+        <mat-expansion-panel hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h3>{{spell.name}}</h3>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <p class="pt-3">{{spell.description}}</p>
+        </mat-expansion-panel>
+        <mat-expansion-panel (opened)="panelOpenState = true"
+                             (closed)="panelOpenState = false">
+        </mat-expansion-panel>
+      </div>
+    </div>
+  </mat-accordion>
+</div>

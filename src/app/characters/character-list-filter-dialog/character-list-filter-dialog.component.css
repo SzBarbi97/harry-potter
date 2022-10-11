@@ -1,0 +1,73 @@
+::ng-deep .mat-dialog-container {
+  background: linear-gradient(rgb(255, 255, 255) 0%, rgb(50, 50, 50) 100%);
+  padding: 0;
+}
+
+mat-form-field, mat-label, mat-select, mat-option {
+  font-family: 'Harry Potter', sans-serif;
+  line-height: normal;
+  text-align: center;
+}
+
+::ng-deep .mat-form-field-wrapper {
+  background-color: transparent;
+}
+
+::ng-deep .mat-form-field-flex {
+  background-color: #a9a7a7 !important;
+}
+
+::ng-deep .mat-calendar-body-cell-content {
+  color: goldenrod !important;
+}
+
+mat-label {
+  color: #653112;
+}
+
+input, mat-option, h3 {
+  color: goldenrod;
+  -webkit-text-stroke: 1px #653112;
+}
+
+::ng-deep .mat-select-value {
+  color: goldenrod !important;
+  -webkit-text-stroke: 1px #653112;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:active {
+  -webkit-background-clip: text !important;
+}
+
+input:-webkit-autofill {
+  -webkit-text-fill-color: goldenrod !important;
+}
+
+.filter-dialog {
+  width: 400px;
+  height: 640px;
+}
+
+button {
+  width: 100%;
+}
+
+button:disabled {
+  color: #d3bb74;
+  background-color: #5e3e32;
+}
+
+::ng-deep .mat-form-field-appearance-fill .mat-form-field-underline::before {
+  height: 3px !important;
+  background-color: #653112;
+}
+
+@media screen and (max-width: 575.98px) {
+  .filter-dialog {
+    width: auto;
+  }
+}
+

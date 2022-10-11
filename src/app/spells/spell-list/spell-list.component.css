@@ -1,0 +1,85 @@
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.spinner-border {
+  width: 100px;
+  height: 100px;
+}
+
+.spell-panel {
+  margin-right: 10px;
+}
+
+.mat-expansion-panel-header {
+  font-family: 'Harry Potter', sans-serif;
+  line-height: normal;
+  padding-top: 20px;
+  height: 50px;
+}
+
+.mat-expansion-panel-header-title {
+  color: #653112;
+}
+
+::ng-deep .mat-expansion-panel-body {
+  font-family: 'Harry Potter', sans-serif;
+  line-height: normal;
+  width: 350px;
+  font-size: 20px;
+  color: goldenrod;
+  border-top: 1px solid #653112;
+  -webkit-text-stroke: 1px #653112;
+}
+
+::ng-deep .mat-content {
+  overflow: inherit !important;
+}
+
+mat-expansion-panel {
+  background: #d2d0d0;
+}
+
+.mat-expansion-panel:not(.mat-expanded):not([aria-disabled=true]) .mat-expansion-panel-header:hover {
+  background: #d2d0d0;
+}
+
+@media screen and (max-width: 767.98px) {
+  .spell-panel {
+    margin-right: 0;
+    max-width: 92%;
+  }
+}
+
+@media screen and (max-width: 575.98px) {
+  ::ng-deep .mat-expansion-panel-body {
+    margin-left: 10px;
+    width: 320px;
+  }
+
+  .mat-expansion-panel-header {
+    margin-left: 10px;
+    justify-content: center;
+    height: 75px;
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: 355px) {
+  ::ng-deep .mat-expansion-panel-body {
+    width: 250px;
+    max-width: 250px;
+  }
+
+  .mat-expansion-panel-header {
+    height: 100px;
+  }
+}
+
+
+

@@ -1,0 +1,43 @@
+<div class="container mt-2">
+
+  <button class="mt-2" (click)="closeCharacterDetail()">Back to characters</button>
+
+  <div class="character-detail-container">
+    <div class="text-center mt-2">
+      <h2>{{character.name}}</h2>
+
+      <div class="row">
+        <div class="col-12">
+          <img [imageSrc]="character.image" [alt]="character.name">
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-2 ml-1">
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+        <p class="mt-2">Actor: <span>{{character.actor}}</span></p>
+        <p>Species: <span>{{character.species}}</span></p>
+        <p>Gender: <span>{{character.gender}}</span></p>
+        <p>House: <span>{{character.house}}</span></p>
+        <p>Date of birth: <span>{{character.dateOfBirth}}</span></p>
+        <p>Wizard: <span>{{character.wizard}}</span></p>
+        <p>Ancestry: <span>{{character.ancestry}}</span></p>
+        <p>Eye colour: <span>{{character.eyeColour}}</span></p>
+      </div>
+
+      <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+        <p>Hair colour: <span>{{character.hairColour}}</span></p>
+        <p>Wand:</p>
+        <ul class="list-item">
+          <li>Wood: <span>{{character.wand.wood}}</span></li>
+          <li>Core: <span>{{character.wand.core}}</span></li>
+          <li>Length: <span>{{character.wand.length}}</span></li>
+        </ul>
+        <p>Patronus: <span>{{character.patronus}}</span></p>
+        <p>Hogwarts student: <span>{{character.hogwartsStudent}}</span></p>
+        <p>Hogwarts staff: <span>{{character.hogwartsStaff}}</span></p>
+        <p>Alive: <span>{{character.alive}}</span></p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+<div *ngIf="characterListEnabled">
+  <app-character-list (openCharacterDetail)="openCharacterDetail($event)"></app-character-list>
+</div>
+
+<div *ngIf="!characterListEnabled && character">
+  <app-character-detail [character]="character"
+                        (closeCharacterDetail)="closeCharacterDetail()">
+  </app-character-detail>
+</div>

@@ -1,0 +1,28 @@
+img {
+  vertical-align: inherit;
+  width: 163px;
+  height: 227px;
+  min-width: 163px;
+  min-height: 227px;
+  border-radius: 5px;
+}
+
+span, h2 {
+  padding-top: 20px;
+  color: goldenrod;
+  text-shadow: 1px 1px #653112;
+}
+
+.character-detail-container {
+  color: #653112;
+  background: #a9a7a7;
+  border-radius: 5px;
+}
+
+@media screen and (max-width: 575.98px) {
+  button {
+    width: 100%;
+  }
+}
+
+

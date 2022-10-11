@@ -1,0 +1,24 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  background: linear-gradient(rgb(255, 255, 255) 0%, rgb(0, 0, 0) 100%);
+  background-attachment: fixed;
+  font-family: 'Harry Potter', sans-serif;
+  font-size: 20px;
+}
+
+button {
+  color: goldenrod;
+  border: none;
+  background: #653112;
+  border-radius: 5px;
+  padding: 2px 30px;
+}
+
+button:hover {
+  color: #653112;
+  background: goldenrod;
+}
+
