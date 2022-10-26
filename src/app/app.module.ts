@@ -27,6 +27,7 @@ import {FooterComponent} from './shared/components/footer/footer.component';
 import {CharacterDetailComponent} from './characters/character-detail/character-detail.component';
 import { CharactersComponent } from './characters/characters.component';
 import {MatExpansionModule} from "@angular/material/expansion";
+import { CustomValidatorDirective } from './shared/directive/custom-validator.directive';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
     ImageSrcDirective,
     CharacterListFilterDialogComponent,
     IfValidatorDirective,
+    CustomValidatorDirective,
     FooterComponent,
     CharacterDetailComponent,
     CharactersComponent
