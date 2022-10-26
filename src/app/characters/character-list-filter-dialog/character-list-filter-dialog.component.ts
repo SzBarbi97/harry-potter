@@ -19,7 +19,7 @@ export class CharacterListFilterDialogComponent implements OnInit {
   characterFilter: CharacterFilter;
 
   originalNameSet: Set<string> = new Set<string>();
-  filteredNameSet: Set<string> = new Set<string>();
+  filteredNames: Array<string> = [];
   houseSet: Set<string> = new Set<string>();
   originalSpeciesSet: Set<string> = new Set<string>();
   filteredSpeciesSet: Set<string> = new Set<string>();
@@ -29,6 +29,7 @@ export class CharacterListFilterDialogComponent implements OnInit {
   filteredAncestrySet: Set<string> = new Set<string>();
   originalActorSet: Set<string> = new Set<string>();
   filteredActorSet: Set<string> = new Set<string>();
+  originalNames: string[] = [];
 
 
   constructor(public dialogRef: MatDialogRef<CharacterListFilterDialogComponent>,
@@ -40,6 +41,7 @@ export class CharacterListFilterDialogComponent implements OnInit {
   ngOnInit(): void {
     this.fillSelectOptions();
     this.filter();
+    this.originalNames = Array.from(this.originalNameSet);
   }
 
   fillSelectOptions(): void {
@@ -48,7 +50,7 @@ export class CharacterListFilterDialogComponent implements OnInit {
       .sort()
       .forEach(name => {
         this.originalNameSet.add(name);
-        this.filteredNameSet.add(name);
+        this.filteredNames.push(name);
       });
 
     this.characterList
@@ -129,10 +131,12 @@ export class CharacterListFilterDialogComponent implements OnInit {
   }
 
   filterAutocompleteByName(filterName: string) {
-    console.log('nameFilter');
+    
     filterName = filterName || '';
-    const filteredNames = Array.from(this.originalNameSet).filter(name => this.includes(name, filterName));
-    this.filteredNameSet = new Set(filteredNames);
+    this.filteredNames = Array.from(this.originalNameSet).filter(name => this.includes(name, filterName));
+    
+    this.filterForm?.controls?.['name'].markAsTouched({
+      onlySelf: true});
   }
 
   filterAutocompleteByActor(filterActor: string) {
