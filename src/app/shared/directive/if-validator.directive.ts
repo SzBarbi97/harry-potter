@@ -1,5 +1,5 @@
 import {Directive, Input, OnInit} from "@angular/core";
-import {FormControl, NG_VALIDATORS, ValidationErrors, Validator} from "@angular/forms";
+import {UntypedFormControl, NG_VALIDATORS, ValidationErrors, Validator} from "@angular/forms";
 
 @Directive({
   selector: '[ifValidator]',
@@ -17,7 +17,7 @@ export class IfValidatorDirective implements Validator, OnInit {
   ngOnInit() {
   }
 
-  validate(formControl: FormControl): ValidationErrors | null {
+  validate(formControl: UntypedFormControl): ValidationErrors | null {
     console.log('ifvalidator');
     if (this.ifValidator) {
       return null;
