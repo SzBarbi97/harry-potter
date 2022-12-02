@@ -4,7 +4,7 @@ import { UntypedFormControl, NG_VALIDATORS, ValidationErrors, Validator } from "
 @Directive({
   selector: '[customValidator]',
   providers: [
-    { provide: NG_VALIDATORS, useExisting: CustomValidatorDirective, multi: true }
+    {provide: NG_VALIDATORS, useExisting: CustomValidatorDirective, multi: true}
   ],
 })
 export class CustomValidatorDirective implements Validator, OnInit {
@@ -18,10 +18,13 @@ export class CustomValidatorDirective implements Validator, OnInit {
   }
 
   validate(formControl: UntypedFormControl): ValidationErrors | null {
-    if (!!this.customValidator.filter(name => name.includes(formControl.value)).length) {
+    if (!formControl.value) {
       return null;
     }
-    return { 'invalid': true };
+    if (!!this.customValidator.filter(name => name.toLowerCase().includes(formControl.value.toLowerCase())).length) {
+      return null;
+    }
+    return {'invalid': true};
   }
 
 }

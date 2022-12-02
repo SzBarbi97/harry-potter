@@ -2,9 +2,6 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {CharactersService} from "../../shared/service/characters.service";
 import {Character} from "../../shared/model/character.model";
 import {MatDialog} from "@angular/material/dialog";
-import {
-  CharacterListFilterDialogComponent
-} from "../character-list-filter-dialog/character-list-filter-dialog.component";
 import {CharacterFilter} from "../../shared/model/character-filter.model";
 import {Hogwarts} from "../../shared/enums/hogwarts.enum";
 
@@ -38,28 +35,12 @@ export class CharacterListComponent implements OnInit {
     );
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(CharacterListFilterDialogComponent, {
-      autoFocus: false,
-      data: {
-        characterList: this.originalCharacterList,
-        characterFilter: this.characterFilter
-      }
-    })
-
-    dialogRef.afterClosed().subscribe(characterFilter => {
-      if (characterFilter) {
-        this.characterFilter = characterFilter;
-        this.filter();
-      }
-    });
-  }
-
   openCharacterDetail(actualCharacter: Character): void {
     this.openCharacterDetailEventEmitter.emit(actualCharacter);
   }
 
-  filter() {
+  filter(characterFilter: CharacterFilter): void {
+    this.characterFilter = characterFilter;
     this.filteredCharacterList = this.originalCharacterList;
 
     if (this.characterFilter.name) {

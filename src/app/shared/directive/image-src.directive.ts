@@ -15,7 +15,8 @@ export class ImageSrcDirective implements OnInit {
 
   ngOnInit(): void {
     if (this.imageSrc) {
-      this.src = this.imageSrc;
+      // TODO: ezt ki kell majd szedni
+      this.src = this.imageSrc.replace("herokuapp", "onrender");
     }
   }
 

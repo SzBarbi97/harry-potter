@@ -1,12 +1,17 @@
 <div class="container mt-3">
-  <div class="row filter-button justify-content-end mb-3">
-    <button (click)="openDialog()">Filter</button>
-  </div>
 
   <div *ngIf="originalCharacterList.length === 0">
     <div class="d-flex center">
       <div class="spinner-border text-light"></div>
     </div>
+  </div>
+
+  <div *ngIf="originalCharacterList.length != 0">
+    <app-character-list-filter [characterFilter]="characterFilter"
+                               [characterList]="originalCharacterList"
+                               (filter)="filter($event)"
+    >
+    </app-character-list-filter>
   </div>
 
   <div *ngIf="filteredCharacterList.length != 0">
@@ -21,6 +26,6 @@
   </div>
 
   <div *ngIf="originalCharacterList.length != 0 && filteredCharacterList.length === 0">
-    <p class="text-center mat-error">There are no characters matching the filter criteria!</p>
+    <p class="text-center mat-error mt-5">There are no characters matching the filter criteria!</p>
   </div>
 </div>

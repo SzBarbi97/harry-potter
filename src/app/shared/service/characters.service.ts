@@ -17,7 +17,7 @@ export class CharactersService {
     if (this.characterListObservable) {
       return this.characterListObservable;
     }
-    this.characterListObservable = this.httpClient.get<Character[]>('https://hp-api.herokuapp.com/api/characters')
+    this.characterListObservable = this.httpClient.get<Character[]>('https://hp-api.onrender.com/api/characters')
       .pipe(shareReplay());
     return this.characterListObservable;
   }
