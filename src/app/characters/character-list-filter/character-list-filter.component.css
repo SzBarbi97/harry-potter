@@ -75,6 +75,11 @@ button:disabled {
   margin-top: 0.4em;
 }
 
-::ng-deep .mat-expansion-panel-header:hover {
+.mat-expansion-panel-header:hover {
   background: #d2d0d0 !important;
+}
+
+.mat-expansion-panel-header:only-child {
+  justify-content: center;
+  border: 10px solid red;
 }

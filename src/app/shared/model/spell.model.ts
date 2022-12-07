@@ -1,5 +1,4 @@
-export class Spell {
-  constructor(public name: string,
-              public description: string) {
-  }
+export interface Spell {
+  name?: string,
+  description?: string
 }

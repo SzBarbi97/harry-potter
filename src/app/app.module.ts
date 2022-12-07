@@ -23,7 +23,6 @@ import {FooterComponent} from './shared/components/footer/footer.component';
 import {CharacterDetailComponent} from './characters/character-detail/character-detail.component';
 import {CharactersComponent} from './characters/characters.component';
 import {MatExpansionModule} from "@angular/material/expansion";
-import {CustomValidatorDirective} from './shared/directive/custom-validator.directive';
 import {CharacterListFilterComponent} from './characters/character-list-filter/character-list-filter.component';
 
 @NgModule({
@@ -33,7 +32,6 @@ import {CharacterListFilterComponent} from './characters/character-list-filter/c
     CharacterListComponent,
     SpellListComponent,
     ImageSrcDirective,
-    CustomValidatorDirective,
     FooterComponent,
     CharacterDetailComponent,
     CharactersComponent,

@@ -7,7 +7,7 @@ export class ImageSrcDirective implements OnInit {
 
   noPhotoSrc: string = '/assets/images/hogwart.jpg';
 
-  @Input('imageSrc') imageSrc: string = '';
+  @Input('imageSrc') imageSrc: string | undefined | null = '';
   @HostBinding('src') src: string = this.noPhotoSrc;
 
   constructor() {
@@ -15,8 +15,7 @@ export class ImageSrcDirective implements OnInit {
 
   ngOnInit(): void {
     if (this.imageSrc) {
-      // TODO: ezt ki kell majd szedni
-      this.src = this.imageSrc.replace("herokuapp", "onrender");
+      this.src = this.imageSrc;
     }
   }
 

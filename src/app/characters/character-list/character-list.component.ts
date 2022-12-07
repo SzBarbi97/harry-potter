@@ -45,14 +45,14 @@ export class CharacterListComponent implements OnInit {
 
     if (this.characterFilter.name) {
       this.filteredCharacterList = this.filteredCharacterList
-        .filter(character => this.includes(character.name, this.characterFilter.name!));
+        .filter(character => this.includes(character.name!, this.characterFilter.name!));
     }
 
     if (this.characterFilter.actor === 'Not known') {
       this.filteredCharacterList = this.filteredCharacterList.filter(character => character.actor === '');
     } else if (this.characterFilter.actor) {
       this.filteredCharacterList = this.filteredCharacterList
-        .filter(character => this.includes(character.actor, this.characterFilter.actor!));
+        .filter(character => this.includes(character.actor!, this.characterFilter.actor!));
     }
 
     if (this.characterFilter.gender) {
@@ -67,14 +67,14 @@ export class CharacterListComponent implements OnInit {
 
     if (this.characterFilter.species || this.characterFilter.species === '') {
       this.filteredCharacterList = this.filteredCharacterList
-        .filter(character => this.includes(character.species, this.characterFilter.species!));
+        .filter(character => this.includes(character.species!, this.characterFilter.species!));
     }
 
     if (this.characterFilter.patronus === 'No patronus') {
       this.filteredCharacterList = this.filteredCharacterList.filter(character => character.patronus === '');
     } else if (this.characterFilter.patronus) {
       this.filteredCharacterList = this.filteredCharacterList
-        .filter(character => this.includes(character.patronus, this.characterFilter.patronus!));
+        .filter(character => this.includes(character.patronus!, this.characterFilter.patronus!));
     }
 
     if (typeof this.characterFilter.image === 'boolean') {
@@ -109,7 +109,7 @@ export class CharacterListComponent implements OnInit {
 
     if (this.characterFilter.ancestry) {
       this.filteredCharacterList = this.filteredCharacterList
-        .filter(character => this.includes(character.ancestry, this.characterFilter.ancestry!));
+        .filter(character => this.includes(character.ancestry!, this.characterFilter.ancestry!));
     } else if (this.characterFilter.ancestry === '') {
       this.filteredCharacterList = this.filteredCharacterList
         .filter(character => character.ancestry === this.characterFilter.ancestry);

@@ -1,9 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {NgForm} from "@angular/forms";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Character} from "../../shared/model/character.model";
 import {CharacterFilter} from "../../shared/model/character-filter.model";
 import {Hogwarts} from "../../shared/enums/hogwarts.enum";
-import {MatExpansionPanel} from "@angular/material/expansion";
+import {AbstractControl, FormControl, FormGroup, ValidationErrors} from "@angular/forms";
 
 @Component({
   selector: 'app-character-list-filter',
@@ -12,16 +11,13 @@ import {MatExpansionPanel} from "@angular/material/expansion";
 })
 export class CharacterListFilterComponent implements OnInit {
 
-  @ViewChild('f', {static: true}) filterForm?: NgForm;
-
-  @ViewChild(MatExpansionPanel, {static: true}) matExpansionPanelElement!: MatExpansionPanel;
-
   @Input() characterFilter: CharacterFilter = {};
 
   @Input() characterList: Character[] = [];
 
   @Output("filter") filterEventEmitter: EventEmitter<CharacterFilter> = new EventEmitter<CharacterFilter>();
 
+  filterForm!: FormGroup;
 
   originalNames: string[] = [];
   filteredNames: string[] = [];
@@ -44,27 +40,113 @@ export class CharacterListFilterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.characterFilter = JSON.parse(JSON.stringify(this.characterFilter));
+    this.initFilterForm();
     this.fillSelectOptions();
     this.filter();
   }
 
   onFilterClick(): void {
-    //this.matExpansionPanelElement.close();
-    this.filterEventEmitter.emit(this.characterFilter);
+    const characterFilter = JSON.parse(JSON.stringify(this.filterForm.value));
+
+    const birthDateFrom = this.filterForm.get('birthDateFrom')?.value;
+    characterFilter.birthDateFrom = birthDateFrom ? new Date(birthDateFrom) : null;
+
+    const birthDateTo = this.filterForm.get('birthDateTo')?.value;
+    characterFilter.birthDateTo = birthDateTo ? new Date(birthDateTo) : null;
+
+    this.filterEventEmitter.emit(characterFilter);
+  }
+
+  initFilterForm(): void {
+    this.filterForm = new FormGroup({
+      name: new FormControl(this.characterFilter.name, this.nameValidator.bind(this)),
+      actor: new FormControl(this.characterFilter.actor, this.actorValidator.bind(this)),
+      gender: new FormControl(this.characterFilter.gender, this.genderValidator.bind(this)),
+      house: new FormControl(this.characterFilter.house, this.houseValidator.bind(this)),
+      species: new FormControl(this.characterFilter.species, this.speciesValidator.bind(this)),
+      patronus: new FormControl(this.characterFilter.patronus, this.patronusValidator.bind(this)),
+      image: new FormControl(this.characterFilter.image),
+      birthDateFrom: new FormControl(this.characterFilter.birthDateFrom),
+      birthDateTo: new FormControl(this.characterFilter.birthDateTo),
+      wizard: new FormControl(this.characterFilter.wizard),
+      ancestry: new FormControl(this.characterFilter.ancestry, this.ancestryValidator.bind(this)),
+      alive: new FormControl(this.characterFilter.alive),
+      hogwarts: new FormControl(this.characterFilter.hogwarts, this.hogwartsValidator.bind(this))
+    });
+  }
+
+  nameValidator(control: AbstractControl): ValidationErrors | null {
+    this.filterAutocompleteByName(control.value);
+    if (this.filteredNames.length > 0) {
+      return null;
+    }
+    return {invalid: true};
+  }
+
+  actorValidator(control: AbstractControl): ValidationErrors | null {
+    this.filterAutocompleteByActor(control.value);
+    if (this.filteredActors.length > 0) {
+      return null;
+    }
+    return {invalid: true};
+  }
+
+  genderValidator(control: AbstractControl): ValidationErrors | null {
+    if (!control.value || control.value === 'male' || control.value === 'female') {
+      return null;
+    }
+    return {invalid: true};
+  }
+
+  houseValidator(control: AbstractControl): ValidationErrors | null {
+    if (!control.value || this.houses.includes(control.value)) {
+      return null;
+    }
+    return {invalid: true};
+  }
+
+  speciesValidator(control: AbstractControl): ValidationErrors | null {
+    this.filterAutoCompleteBySpecies(control.value);
+    if (this.filteredSpecies.length > 0) {
+      return null;
+    }
+    return {invalid: true};
+  }
+
+  patronusValidator(control: AbstractControl): ValidationErrors | null {
+    this.filterAutoCompleteByPatronus(control.value);
+    if (this.filteredPatronus.length > 0) {
+      return null;
+    }
+    return {invalid: true};
+  }
+
+  ancestryValidator(control: AbstractControl): ValidationErrors | null {
+    this.filterAutoCompleteByAncestry(control.value);
+    if (this.filteredAncestry.length > 0) {
+      return null;
+    }
+    return {invalid: true};
+  }
+
+  hogwartsValidator(control: AbstractControl): ValidationErrors | null {
+    if (!control.value || Object.values(Hogwarts).includes(control.value)) {
+      return null;
+    }
+    return {invalid: true};
   }
 
   fillSelectOptions(): void {
     const originalNameSet = new Set<string>();
     this.characterList
       .map(character => character.name)
+      .filter(name => name)
       .sort()
       .forEach(name => {
-        originalNameSet.add(name);
+        originalNameSet.add(name!);
       });
     this.originalNames = Array.from(originalNameSet);
     this.filteredNames = Array.from(originalNameSet);
-
 
     const originalActorSet = new Set<string>();
     this.characterList
@@ -72,7 +154,7 @@ export class CharacterListFilterComponent implements OnInit {
       .filter(actor => actor)
       .sort()
       .forEach(actor => {
-        originalActorSet.add(actor);
+        originalActorSet.add(actor!);
       });
     originalActorSet.add('Not known');
     this.originalActors = Array.from(originalActorSet);
@@ -84,7 +166,7 @@ export class CharacterListFilterComponent implements OnInit {
       .filter(house => house)
       .sort()
       .forEach(house => {
-        houseSet.add(house)
+        houseSet.add(house!)
       });
     houseSet.add('');
     this.houses = Array.from(houseSet);
@@ -92,9 +174,10 @@ export class CharacterListFilterComponent implements OnInit {
     const originalSpeciesSet = new Set<string>();
     this.characterList
       .map(character => character.species)
+      .filter(species => species)
       .sort()
       .forEach(species => {
-        originalSpeciesSet.add(species);
+        originalSpeciesSet.add(species!);
       });
     this.originalSpecies = Array.from(originalSpeciesSet);
     this.filteredSpecies = Array.from(originalSpeciesSet);
@@ -105,7 +188,7 @@ export class CharacterListFilterComponent implements OnInit {
       .filter(patronus => patronus)
       .sort()
       .forEach(patronus => {
-        originalPatronusSet.add(patronus);
+        originalPatronusSet.add(patronus!);
       });
     originalPatronusSet.add('No patronus');
     this.originalPatronus = Array.from(originalPatronusSet);
@@ -117,12 +200,11 @@ export class CharacterListFilterComponent implements OnInit {
       .filter(ancestry => ancestry)
       .sort()
       .forEach(ancestry => {
-        originalAncestrySet.add(ancestry);
+        originalAncestrySet.add(ancestry!);
       });
     originalAncestrySet.add('');
     this.originalAncestry = Array.from(originalAncestrySet);
     this.filteredAncestry = Array.from(originalAncestrySet);
-
   }
 
   filter() {
@@ -145,7 +227,6 @@ export class CharacterListFilterComponent implements OnInit {
     if (this.characterFilter.ancestry) {
       this.filterAutoCompleteByAncestry(this.characterFilter.ancestry);
     }
-
   }
 
   filterAutocompleteByName(filterName: string) {

@@ -1,25 +1,20 @@
-<mat-accordion>
+<mat-accordion *ngIf="filterForm">
   <mat-expansion-panel>
 
-    <mat-expansion-panel-header>
+    <mat-expansion-panel-header class="mat-expansion-panel-header align-items-center justify-content-center">
       <h3 class="mt-3">Character filter</h3>
     </mat-expansion-panel-header>
 
     <div class="container">
       <hr/>
-      <form #f="ngForm" class="text-center">
+      <form [formGroup]="filterForm" class="text-center">
         <div class="row justify-content-center">
           <mat-form-field class="col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12" appearance="fill">
             <mat-label>Character name</mat-label>
             <input
-              [(ngModel)]="characterFilter.name"
-              (ngModelChange)="filterAutocompleteByName($event)"
-              [customValidator]="originalNames"
-              ngModel
               [matAutocomplete]="nameAutoComplete"
+              formControlName="name"
               matInput
-              name="name"
-              validateOnChange="true"
             />
             <mat-autocomplete #nameAutoComplete="matAutocomplete">
               <mat-option *ngFor="let name of filteredNames" [value]="name">{{name}}</mat-option>
@@ -30,11 +25,8 @@
           <mat-form-field class="col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12" appearance="fill">
             <mat-label>Actor name</mat-label>
             <input
-              [(ngModel)]="characterFilter.actor"
-              (ngModelChange)="filterAutocompleteByActor($event)"
-              [customValidator]="originalActors"
-              ngModel
               [matAutocomplete]="actorAutoComplete"
+              formControlName="actor"
               matInput
               name="actor"
             />
@@ -46,7 +38,7 @@
 
           <mat-form-field class="col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12" appearance="fill">
             <mat-label>Gender</mat-label>
-            <mat-select [(ngModel)]="characterFilter.gender" name="gender">
+            <mat-select formControlName="gender">
               <mat-option [value]="'male'">male</mat-option>
               <mat-option [value]="'female'">female</mat-option>
               <mat-option></mat-option>
@@ -55,7 +47,7 @@
 
           <mat-form-field class="col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12" appearance="fill">
             <mat-label>House</mat-label>
-            <mat-select [(ngModel)]="characterFilter.house" name="house">
+            <mat-select formControlName="house">
               <mat-option *ngFor="let house of houses" [value]="house">{{house ? house : "No house"}}</mat-option>
               <mat-option></mat-option>
             </mat-select>
@@ -64,11 +56,8 @@
           <mat-form-field class="col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12" appearance="fill">
             <mat-label>Species</mat-label>
             <input
-              [(ngModel)]="characterFilter.species"
-              (ngModelChange)="filterAutoCompleteBySpecies($event)"
-              [customValidator]="originalSpecies"
-              ngModel
               [matAutocomplete]="speciesAutoComplete"
+              formControlName="species"
               matInput
               name="species"
             />
@@ -85,11 +74,8 @@
           <mat-form-field class="col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12" appearance="fill">
             <mat-label>Patronus</mat-label>
             <input
-              [(ngModel)]="characterFilter.patronus"
-              (ngModelChange)="filterAutoCompleteByPatronus($event)"
-              [customValidator]="originalPatronus"
-              ngModel
               [matAutocomplete]="patronusAutoComplete"
+              formControlName="patronus"
               matInput
               name="patronus"
             />
@@ -104,10 +90,10 @@
           </mat-form-field>
 
           <mat-form-field class="col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12" appearance="fill">
-            <mat-label>Picture</mat-label>
-            <mat-select [(ngModel)]="characterFilter.image" name="image">
-              <mat-option [value]="true">Has a picture</mat-option>
-              <mat-option [value]="false">No picture</mat-option>
+            <mat-label>Image</mat-label>
+            <mat-select formControlName="image">
+              <mat-option [value]="true">Has an image</mat-option>
+              <mat-option [value]="false">No image</mat-option>
               <mat-option></mat-option>
             </mat-select>
           </mat-form-field>
@@ -117,7 +103,7 @@
             <input
               matInput
               [matDatepicker]="datepickerFrom"
-              [(ngModel)]="characterFilter.birthDateFrom"
+              formControlName="birthDateFrom"
               name="birthDateFrom"
             />
             <mat-datepicker-toggle
@@ -138,7 +124,7 @@
             <input
               matInput
               [matDatepicker]="datepickerTo"
-              [(ngModel)]="characterFilter.birthDateTo"
+              formControlName="birthDateTo"
               name="birthDateTo"
             />
             <mat-datepicker-toggle
@@ -156,7 +142,7 @@
 
           <mat-form-field class="col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12" appearance="fill">
             <mat-label>Wizard</mat-label>
-            <mat-select [(ngModel)]="characterFilter.wizard" name="wizard">
+            <mat-select formControlName="wizard">
               <mat-option [value]="true">Yes</mat-option>
               <mat-option [value]="false">No</mat-option>
               <mat-option></mat-option>
@@ -166,11 +152,8 @@
           <mat-form-field class="col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12" appearance="fill">
             <mat-label>Ancestry</mat-label>
             <input
-              [(ngModel)]="characterFilter.ancestry"
-              (ngModelChange)="filterAutoCompleteByAncestry($event)"
-              [customValidator]="originalAncestry"
-              ngModel
               [matAutocomplete]="ancestryAutoComplete"
+              formControlName="ancestry"
               matInput
               name="ancestry"
             />
@@ -186,7 +169,7 @@
 
           <mat-form-field class="col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12" appearance="fill">
             <mat-label>Alive</mat-label>
-            <mat-select [(ngModel)]="characterFilter.alive" name="alive">
+            <mat-select formControlName="alive">
               <mat-option [value]="true">Live</mat-option>
               <mat-option [value]="false">Dead</mat-option>
               <mat-option></mat-option>
@@ -195,7 +178,7 @@
 
           <mat-form-field class="col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12" appearance="fill">
             <mat-label>Hogwarts</mat-label>
-            <mat-select [(ngModel)]="characterFilter.hogwarts" name="hogwarts">
+            <mat-select formControlName="hogwarts">
               <mat-option [value]="Hogwarts.STUDENT">Student</mat-option>
               <mat-option [value]="Hogwarts.STAFF">Staff</mat-option>
               <mat-option [value]="Hogwarts.NONE">None of them</mat-option>
@@ -205,8 +188,8 @@
         </div>
 
         <mat-action-row class="justify-content-center">
-          <button [disabled]="f.invalid" (click)="onFilterClick()">Filter</button>
-          <button (click)="f.resetForm()" class="ml-1">Reset</button>
+          <button [disabled]="filterForm.invalid" (click)="onFilterClick()">Filter</button>
+          <button (click)="filterForm.reset()" class="ml-1">Reset</button>
         </mat-action-row>
       </form>
 
