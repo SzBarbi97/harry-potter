@@ -1,9 +1,10 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {CharactersService} from "../../shared/service/characters.service";
 import {Character} from "../../shared/model/character.model";
-import {MatDialog} from "@angular/material/dialog";
 import {CharacterFilter} from "../../shared/model/character-filter.model";
 import {Hogwarts} from "../../shared/enums/hogwarts.enum";
+import {select, Store} from "@ngrx/store";
+import {AppState} from "../../app.reducer";
 
 @Component({
   selector: 'app-character-list',
@@ -19,7 +20,7 @@ export class CharacterListComponent implements OnInit {
 
   characterFilter: CharacterFilter = {};
 
-  constructor(public dialog: MatDialog, private charactersService: CharactersService) {
+  constructor(private charactersService: CharactersService, private store: Store<AppState>) {
     this.loadCharacterList();
   }
 
@@ -27,12 +28,13 @@ export class CharacterListComponent implements OnInit {
   }
 
   loadCharacterList(): void {
-    this.charactersService.getCharacterList().subscribe(
-      characterList => {
-        this.originalCharacterList = characterList;
-        this.filteredCharacterList = characterList;
-      }
-    );
+    this.store.pipe(select('characters'))
+      .subscribe(
+        characterList => {
+          this.originalCharacterList = characterList;
+          this.filteredCharacterList = characterList;
+        }
+      );
   }
 
   openCharacterDetail(actualCharacter: Character): void {

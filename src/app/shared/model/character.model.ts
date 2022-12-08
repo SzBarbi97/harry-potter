@@ -1,6 +1,7 @@
 import {Wand} from "./wand.model";
 
 export interface Character {
+  id?: number,
   name?: string,
   alternate_names?: string[],
   species?: string,

@@ -10,7 +10,6 @@ import {HttpClientModule} from "@angular/common/http";
 import {SpellListComponent} from './spells/spell-list/spell-list.component';
 import {ImageSrcDirective} from "./shared/directive/image-src.directive";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatDialogModule} from "@angular/material/dialog";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
@@ -24,6 +23,12 @@ import {CharacterDetailComponent} from './characters/character-detail/character-
 import {CharactersComponent} from './characters/characters.component';
 import {MatExpansionModule} from "@angular/material/expansion";
 import {CharacterListFilterComponent} from './characters/character-list-filter/character-list-filter.component';
+import {EffectsModule} from "@ngrx/effects";
+import {CharacterEffects} from "./shared/store/character.effects";
+import {StoreModule} from "@ngrx/store";
+import {appReducer} from "./app.reducer";
+import {environment} from "../environments/environment";
+import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 
 @NgModule({
   declarations: [
@@ -46,14 +51,16 @@ import {CharacterListFilterComponent} from './characters/character-list-filter/c
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatDialogModule,
     MatAutocompleteModule,
     MatRadioModule,
     MatSelectModule,
     ReactiveFormsModule,
     MatNativeDateModule,
     MatDatepickerModule,
-    MatExpansionModule
+    MatExpansionModule,
+    StoreModule.forRoot(appReducer),
+    EffectsModule.forRoot([CharacterEffects]),
+    StoreDevtoolsModule.instrument({logOnly: environment.production}),
   ],
   providers: [],
   bootstrap: [AppComponent]
