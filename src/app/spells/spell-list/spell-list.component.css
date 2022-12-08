@@ -27,7 +27,7 @@
   color: #653112;
 }
 
-::ng-deep .mat-expansion-panel-body {
+:host ::ng-deep .mat-expansion-panel-body {
   font-family: 'Harry Potter', sans-serif;
   line-height: normal;
   width: 350px;
@@ -57,7 +57,7 @@ mat-expansion-panel {
 }
 
 @media screen and (max-width: 575.98px) {
-  ::ng-deep .mat-expansion-panel-body {
+  :host ::ng-deep .mat-expansion-panel-body {
     margin-left: 10px;
     width: 320px;
   }
@@ -71,7 +71,7 @@ mat-expansion-panel {
 }
 
 @media screen and (max-width: 355px) {
-  ::ng-deep .mat-expansion-panel-body {
+  :host ::ng-deep .mat-expansion-panel-body {
     width: 250px;
     max-width: 250px;
   }
