@@ -1,77 +1,68 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {CharactersService} from "../../shared/service/characters.service";
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Character} from "../../shared/model/character.model";
-import {MatDialog} from "@angular/material/dialog";
-import {
-  CharacterListFilterDialogComponent
-} from "../character-list-filter-dialog/character-list-filter-dialog.component";
 import {CharacterFilter} from "../../shared/model/character-filter.model";
 import {Hogwarts} from "../../shared/enums/hogwarts.enum";
+import {select, Store} from "@ngrx/store";
+import {AppState} from "../../app.reducer";
+import {ActivatedRoute, Router} from "@angular/router";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-character-list',
   templateUrl: './character-list.component.html',
   styleUrls: ['./character-list.component.css']
 })
-export class CharacterListComponent implements OnInit {
+export class CharacterListComponent implements OnInit, OnDestroy {
 
-  @Output('openCharacterDetail') openCharacterDetailEventEmitter: EventEmitter<Character> = new EventEmitter<Character>();
+  private loadCharactersSub?: Subscription;
 
   originalCharacterList: Character[] = [];
   filteredCharacterList: Character[] = [];
 
   characterFilter: CharacterFilter = {};
 
-  constructor(public dialog: MatDialog, private charactersService: CharactersService) {
+  constructor(private store: Store<AppState>,
+              private router: Router,
+              private route: ActivatedRoute
+  ) {
     this.loadCharacterList();
   }
 
   ngOnInit(): void {
   }
 
-  loadCharacterList(): void {
-    this.charactersService.getCharacterList().subscribe(
-      characterList => {
-        this.originalCharacterList = characterList;
-        this.filteredCharacterList = characterList;
-      }
-    );
+  ngOnDestroy(): void {
+    this.loadCharactersSub?.unsubscribe();
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(CharacterListFilterDialogComponent, {
-      autoFocus: false,
-      data: {
-        characterList: this.originalCharacterList,
-        characterFilter: this.characterFilter
-      }
-    })
-
-    dialogRef.afterClosed().subscribe(characterFilter => {
-      if (characterFilter) {
-        this.characterFilter = characterFilter;
-        this.filter();
-      }
-    });
+  loadCharacterList(): void {
+    this.loadCharactersSub = this.store.pipe(select('characters'))
+      .subscribe(
+        characterList => {
+          this.originalCharacterList = characterList;
+          this.filteredCharacterList = characterList;
+        }
+      );
   }
 
   openCharacterDetail(actualCharacter: Character): void {
-    this.openCharacterDetailEventEmitter.emit(actualCharacter);
+    this.router.navigate([actualCharacter.id], {relativeTo: this.route});
   }
 
-  filter() {
+  filter(characterFilter: CharacterFilter): void {
+    this.characterFilter = characterFilter;
     this.filteredCharacterList = this.originalCharacterList;
 
     if (this.characterFilter.name) {
       this.filteredCharacterList = this.filteredCharacterList
-        .filter(character => this.includes(character.name, this.characterFilter.name!));
+        .filter(character => this.includes(character.name!, this.characterFilter.name!));
     }
 
     if (this.characterFilter.actor === 'Not known') {
       this.filteredCharacterList = this.filteredCharacterList.filter(character => character.actor === '');
     } else if (this.characterFilter.actor) {
       this.filteredCharacterList = this.filteredCharacterList
-        .filter(character => this.includes(character.actor, this.characterFilter.actor!));
+        .filter(character => this.includes(character.actor!, this.characterFilter.actor!));
     }
 
     if (this.characterFilter.gender) {
@@ -86,14 +77,14 @@ export class CharacterListComponent implements OnInit {
 
     if (this.characterFilter.species || this.characterFilter.species === '') {
       this.filteredCharacterList = this.filteredCharacterList
-        .filter(character => this.includes(character.species, this.characterFilter.species!));
+        .filter(character => this.includes(character.species!, this.characterFilter.species!));
     }
 
     if (this.characterFilter.patronus === 'No patronus') {
       this.filteredCharacterList = this.filteredCharacterList.filter(character => character.patronus === '');
     } else if (this.characterFilter.patronus) {
       this.filteredCharacterList = this.filteredCharacterList
-        .filter(character => this.includes(character.patronus, this.characterFilter.patronus!));
+        .filter(character => this.includes(character.patronus!, this.characterFilter.patronus!));
     }
 
     if (typeof this.characterFilter.image === 'boolean') {
@@ -128,7 +119,7 @@ export class CharacterListComponent implements OnInit {
 
     if (this.characterFilter.ancestry) {
       this.filteredCharacterList = this.filteredCharacterList
-        .filter(character => this.includes(character.ancestry, this.characterFilter.ancestry!));
+        .filter(character => this.includes(character.ancestry!, this.characterFilter.ancestry!));
     } else if (this.characterFilter.ancestry === '') {
       this.filteredCharacterList = this.filteredCharacterList
         .filter(character => character.ancestry === this.characterFilter.ancestry);

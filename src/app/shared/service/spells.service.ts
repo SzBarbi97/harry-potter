@@ -13,6 +13,6 @@ export class SpellsService {
   }
 
   public getSpellList(): Observable<Spell[]> {
-    return this.httpClient.get<Spell[]>('https://hp-api.herokuapp.com/api/spells');
+    return this.httpClient.get<Spell[]>('https://hp-api.onrender.com/api/spells');
   }
 }

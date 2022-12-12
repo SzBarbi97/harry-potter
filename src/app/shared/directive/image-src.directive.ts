@@ -7,7 +7,7 @@ export class ImageSrcDirective implements OnInit {
 
   noPhotoSrc: string = '/assets/images/hogwart.jpg';
 
-  @Input('imageSrc') imageSrc: string = '';
+  @Input('imageSrc') imageSrc: string | undefined | null = '';
   @HostBinding('src') src: string = this.noPhotoSrc;
 
   constructor() {
