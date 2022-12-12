@@ -19,7 +19,6 @@ export class CharacterResolver implements Resolve<Character[]> {
       .pipe(
         tap(characters => {
           if (!characters || !characters.length) {
-            console.log("hey")
             this.store.dispatch(characterActions.fetchCharacterList());
           }
         })

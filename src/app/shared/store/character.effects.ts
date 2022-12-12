@@ -14,7 +14,7 @@ export class CharacterEffects {
       map(characters => {
         let id = 1;
         characters.forEach(character => character.id = id++);
-        return characterActions.setCharacterList({characters: characters})
+        return characterActions.setCharacterList({characters: characters});
       }))
   });
 

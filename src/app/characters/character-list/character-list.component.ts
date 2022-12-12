@@ -1,10 +1,10 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {CharactersService} from "../../shared/service/characters.service";
+import {Component, OnInit} from '@angular/core';
 import {Character} from "../../shared/model/character.model";
 import {CharacterFilter} from "../../shared/model/character-filter.model";
 import {Hogwarts} from "../../shared/enums/hogwarts.enum";
 import {select, Store} from "@ngrx/store";
 import {AppState} from "../../app.reducer";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-character-list',
@@ -13,14 +13,15 @@ import {AppState} from "../../app.reducer";
 })
 export class CharacterListComponent implements OnInit {
 
-  @Output('openCharacterDetail') openCharacterDetailEventEmitter: EventEmitter<Character> = new EventEmitter<Character>();
-
   originalCharacterList: Character[] = [];
   filteredCharacterList: Character[] = [];
 
   characterFilter: CharacterFilter = {};
 
-  constructor(private charactersService: CharactersService, private store: Store<AppState>) {
+  constructor(private store: Store<AppState>,
+              private router: Router,
+              private route: ActivatedRoute
+  ) {
     this.loadCharacterList();
   }
 
@@ -38,7 +39,7 @@ export class CharacterListComponent implements OnInit {
   }
 
   openCharacterDetail(actualCharacter: Character): void {
-    this.openCharacterDetailEventEmitter.emit(actualCharacter);
+    this.router.navigate([actualCharacter.id], {relativeTo: this.route});
   }
 
   filter(characterFilter: CharacterFilter): void {
