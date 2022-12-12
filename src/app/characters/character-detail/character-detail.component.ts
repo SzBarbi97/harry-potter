@@ -1,22 +1,19 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Character} from "../../shared/model/character.model";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Store} from "@ngrx/store";
 import {AppState} from "../../app.reducer";
-import {filter, map, Subscription, switchMap} from "rxjs";
+import {filter, map, switchMap} from "rxjs";
 
 @Component({
   selector: 'app-character-detail',
   templateUrl: './character-detail.component.html',
   styleUrls: ['./character-detail.component.css']
 })
-export class CharacterDetailComponent implements OnInit, OnDestroy {
-
-  private charactersSub?: Subscription;
+export class CharacterDetailComponent implements OnInit {
 
   id: number = 0;
   character!: Character;
-
 
   constructor(
     private route: ActivatedRoute,
@@ -25,7 +22,7 @@ export class CharacterDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.charactersSub = this.route.params.pipe(
+    this.route.params.pipe(
       map(params => {
         return +params['id'];
       }),
@@ -46,10 +43,6 @@ export class CharacterDetailComponent implements OnInit, OnDestroy {
         },
         error: () => this.router.navigate(['characters'])
       });
-  }
-
-  ngOnDestroy(): void {
-    this.charactersSub?.unsubscribe();
   }
 
 }
