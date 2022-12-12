@@ -1,17 +1,20 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Character} from "../../shared/model/character.model";
 import {CharacterFilter} from "../../shared/model/character-filter.model";
 import {Hogwarts} from "../../shared/enums/hogwarts.enum";
 import {select, Store} from "@ngrx/store";
 import {AppState} from "../../app.reducer";
 import {ActivatedRoute, Router} from "@angular/router";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-character-list',
   templateUrl: './character-list.component.html',
   styleUrls: ['./character-list.component.css']
 })
-export class CharacterListComponent implements OnInit {
+export class CharacterListComponent implements OnInit, OnDestroy {
+
+  private loadCharactersSub?: Subscription;
 
   originalCharacterList: Character[] = [];
   filteredCharacterList: Character[] = [];
@@ -28,8 +31,12 @@ export class CharacterListComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  ngOnDestroy(): void {
+    this.loadCharactersSub?.unsubscribe();
+  }
+
   loadCharacterList(): void {
-    this.store.pipe(select('characters'))
+    this.loadCharactersSub = this.store.pipe(select('characters'))
       .subscribe(
         characterList => {
           this.originalCharacterList = characterList;
